@@ -177,7 +177,7 @@ const drawBlobImageToScreen = (blob) => {
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(
     function () {
-      // window.$message.success('Copy to clipboard successfully')
+      window.$message.success('Copy to clipboard successfully')
     },
     function (err) {
       window.$message.error(err.message)
