@@ -50,6 +50,10 @@
                 <td>ClassName</td>
                 <td>{{ inspectorData.className }}</td>
               </tr>
+              <tr v-if="elem.rect">
+                  <td># rect</td>
+                  <td>{{JSON.stringify(elem.rect)}}</td>
+                </tr>
               <tr v-if="inspectorData.node" v-for="(item, index) in keyProps" :key="index">
                 <td>{{ item }}</td>
                 <td>
@@ -58,6 +62,7 @@
                   <div v-else>{{ inspectorData.node?.[item] }} </div>
                 </td>
               </tr>
+             
             </tbody>
           </n-table>
         </n-scrollbar>
@@ -334,7 +339,7 @@ function drawHoverNode(pos) {
   drawNode(nodeHovered.value, 'blue')
 }
 const elem = computed(() => {
-  return nodeHovered.value || {}
+  return nodeSelected.value || {}
 })
 
 function getAttrCount(collectionKey, key) {
