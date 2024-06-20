@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.4.0
+
+      - name: Set node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: pnpm
+
+      - name: Install
+        run: pnpm i
+
+      - name: Test
+        run: pnpm run test --run
+
+      - name: Type check
+        run: pnpm run type-check
+
+      - name: Build
+        run: pnpm run build
