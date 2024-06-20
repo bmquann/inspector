@@ -51,7 +51,7 @@
                 <td>{{ inspectorData.className }}</td>
               </tr>
               <tr v-if="mouseEvent">
-                  <td># mouse react</td>
+                  <td># mouse rect</td>
                   <td>x: {{mouseEvent?.x || 0}} y: {{ mouseEvent?.y || 0}}</td>
                 </tr>
               <tr v-if="elem.rect">
