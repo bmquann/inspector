@@ -50,10 +50,15 @@
                 <td>ClassName</td>
                 <td>{{ inspectorData.className }}</td>
               </tr>
+              <tr v-if="mouseEvent">
+                  <td># mouse react</td>
+                  <td>x: {{mouseEvent?.x || 0}} y: {{ mouseEvent?.y || 0}}</td>
+                </tr>
               <tr v-if="elem.rect">
-                  <td># rect</td>
+                  <td># element rect</td>
                   <td>{{JSON.stringify(elem.rect)}}</td>
                 </tr>
+            
               <tr v-if="inspectorData.node" v-for="(item, index) in keyProps" :key="index">
                 <td>{{ item }}</td>
                 <td>
@@ -116,6 +121,7 @@ const inspectorData = ref({})
 const deviceId = ref('988a1637384e545a5530')
 const treeData = ref()
 const loading= ref(false)
+const mouseEvent = ref(null)
 
 // hover
 const nodeHovered = ref(null)
@@ -488,7 +494,8 @@ function mouseDownListener(e) {
     return
   }
   e.preventDefault()
-
+  mouseEvent.value = e
+  
   // fakePinch = e.altKey
   calculateBounds()
   // startMousing()
