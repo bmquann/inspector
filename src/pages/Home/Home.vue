@@ -19,12 +19,12 @@
         <canvas
           id="fgCanvas"
           ref="fgCanvas"
-          @dblclick="doTap(nodeSelected)"
           class="canvas-fg"
           v-bind:style="canvasStyle"
         ></canvas>
         <canvas id="bgCanvas" ref="bgCanvas" class="canvas-bg" v-bind:style="canvasStyle"></canvas>
         <span class="finger finger-0" style="transform: translate3d(200px, 100px, 0px)"></span>
+        <img style="z-index: 10" v-if="loading" :src="loadingImg">
       </section>
     </div>
     <n-split class="h-full overflow-auto" direction="horizontal" :max="0.85" :min="0.15">
@@ -88,6 +88,7 @@ import axios from 'axios'
 // import { useData } from './useData'
 import Tree from './Tree.vue'
 import { debounce } from 'lodash'
+import loadingImg from '../../assets/loading.svg'
 
 const keyProps = [
   'index',
@@ -114,6 +115,7 @@ const activity = ref()
 const inspectorData = ref({})
 const deviceId = ref('988a1637384e545a5530')
 const treeData = ref()
+const loading= ref(false)
 
 // hover
 const nodeHovered = ref(null)
@@ -670,16 +672,18 @@ const clickNode = (id) => {
 }
 
 
-const dumpData = () =>{
-  axios.get(`http://localhost:17310/api/v1/devices/Android%3A${deviceId.value}/screenshot`).then((res) => {
+const dumpData =async  () =>{
+  loading.value = true;
+ await axios.get(`http://localhost:17310/api/v1/devices/Android%3A${deviceId.value}/screenshot`).then((res) => {
     var blob = b64toBlob(res.data.data, 'image/jpeg')
     drawBlobImageToScreen(blob)
   })
-  axios.get(`http://localhost:17310/api/v2/devices/Android%3A${deviceId.value}/hierarchy`).then((res) => {
+ await axios.get(`http://localhost:17310/api/v2/devices/Android%3A${deviceId.value}/hierarchy`).then((res) => {
     activity.value = res.data.activity
     treeData.value = res.data.jsonHierarchy
     drawAllNodeFromSource(res.data.jsonHierarchy)
   })
+  loading.value = false
 }
 onMounted(() => {
   dumpData()
