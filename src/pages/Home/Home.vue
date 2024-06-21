@@ -1,5 +1,5 @@
 <template>
-  <div class="ml-40px flex items-center gap-16px my-16px">
+  <div class="ml-40px flex items-center justify-center gap-16px my-8px">
       <!-- <n-select class="w-220px" filterable v-model:value="deviceId"></n-select> -->
       <n-input style="width: 220px !important"  v-model:value="deviceId"></n-input>
        
@@ -755,7 +755,7 @@ onMounted(() => {
   flex: 1;
   gap: 16px;
   height: 90vh;
-  padding: 16px;
+  padding: 16px ;
   background: #f2f2f2;
 }
 

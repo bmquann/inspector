@@ -1,5 +1,5 @@
 <template>
-    <n-tree ref="treeInst" style="height: 90vh" virtual-scroll show-line :selected-keys="[props.selectedKey]"
+    <n-tree ref="treeInst" style="height: 90vh" virtual-scroll  :selected-keys="[props.selectedKey]"
         v-if="treeData" block-line :data="treeData" key-field="id" :render-label="renderLabel" :node-props="nodeProps"
         default-expand-all />
 </template>
@@ -54,8 +54,8 @@ function renderLabel({ option }) {
         h('span', {style: {color: 'red'}}, listText[0]),
 
         h('span', {}, [
-            h('i', {style: {color: 'blue'}},{default: () => listText[1] ? '- resourceId: ' : ''}),
-            h('span', {}, listText[1] ? listText[1] : ''),
+            h('i', {style: {color: 'blue'}},{default: () => listText[1] ? '- resourceId=' : ''}),
+            h('span', {}, listText[1] ? `"${listText[1].trim()}"` : ''),
         ]),
     ])
 }
