@@ -46,7 +46,18 @@ function sourceToTree(source) {
     return n;
 }
 function renderLabel({ option }) {
-    return option.text
+    // const text = option?.text.split('-')[0]
+
+    const listText = option.text?.split('-')
+    if (!listText) return
+    return h('div', {id: option.id}, [
+        h('span', {style: {color: 'red'}}, listText[0]),
+
+        h('span', {}, [
+            h('i', {style: {color: 'blue'}},{default: () => listText[1] ? '- resourceId: ' : ''}),
+            h('span', {}, listText[1] ? listText[1] : ''),
+        ]),
+    ])
 }
 
 

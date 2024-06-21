@@ -73,7 +73,7 @@
         </n-scrollbar>
       </template>
       <template #2>
-        <div>
+        <n-scrollbar style="max-height: 100%" x-scrollable>
           <Tree
             :data="treeData"
             @deHoverNode="debounceDeHoverTree"
@@ -81,7 +81,7 @@
             @clickNode="clickNode"
             :selectedKey="nodeSelected?._id"
           />
-        </div>
+        </n-scrollbar>
       </template>
     </n-split>
   </div>
@@ -211,11 +211,11 @@ const resizeScreen = (img) => {
   const screenRatio = screenDiv.clientWidth / screenDiv.clientHeight
 
   if (canvasRatio > screenRatio || screenDiv.clientHeight === 0) {
-    canvasStyle.width = `${Math.floor(screenDiv.clientWidth)}px`
-    canvasStyle.height = `${Math.floor(screenDiv.clientWidth / canvasRatio)}px`
+    canvasStyle.width = `${Math.floor(screenDiv.clientWidth - 16)}px`
+    canvasStyle.height = `${Math.floor(screenDiv.clientWidth / canvasRatio) -16}px`
   } else {
-    canvasStyle.width = `${Math.floor(screenDiv.clientHeight * canvasRatio)}px`
-    canvasStyle.height = `${Math.floor(screenDiv.clientHeight)}px`
+    canvasStyle.width = `${Math.floor(screenDiv.clientHeight * canvasRatio) -16}px`
+    canvasStyle.height = `${Math.floor(screenDiv.clientHeight) -16}px`
   }
 }
 
@@ -519,7 +519,9 @@ function mouseDownListener(e) {
     // copyToClipboard(generatedCode)
 
     // self.$jstree.jstree(true)._open_to('#' + self.nodeHovered._id)
-    // document.getElementById(nodeHovered.value._id).scrollIntoView(false)
+    // console.log(document.getElementById(nodeSelected.value._id))
+    // console.log(nodeSelected.value._id)
+    // document.getElementById(nodeSelected.value._id).scrollIntoView()
   }
   // self.touchDown(0, x / screen.bounds.w, y / screen.bounds.h, pressure);
 
@@ -741,19 +743,20 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   flex: 1;
-  background-color: gray;
+  background-color: white;
   height: 100%;
   width: 100%;
+  border-radius: 16px;
 }
 
 .main {
   width: 100%;
   display: flex;
   flex: 1;
-  gap: 40px;
+  gap: 16px;
   height: 90vh;
-
-  border: 1px solid rgb(224, 224, 230);
+  padding: 16px;
+  background: #f2f2f2;
 }
 
 #app {
@@ -764,5 +767,21 @@ onMounted(() => {
 }
 #left {
   width: 40%;
+}
+canvas {
+  border-radius: 16px;
+}
+:deep(.n-split){
+  border-radius : 16px;
+  background: #fff;
+  padding: 16px;
+}
+:deep(.n-split-pane-1){
+  border: 1px solid #e0e0e0;
+  border-radius: 8px 0 0 8px;
+}
+:deep(.n-split-pane-2){
+  border: 1px solid #e0e0e0;
+  border-radius: 0 8px  8px 0;
 }
 </style>
